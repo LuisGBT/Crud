@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List</title>
+</head>
+<body>
+    <table class="table text-center border mt-3">
+  <thead>
+    <tr>
+    <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Age</th>
+      <th scope="col">E-mail</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  {{#each client}}
+  <tbody>
+    <tr>
+      <td> {{id}}  </td>
+      <td> {{name}}  </td>
+      <td> {{idade}} </td>
+      <td> {{email}} </td>
+      <td> 
+        <a class="btn btn-warning" href="/edit/{{id}}">Edit</a>
+        <a class="btn btn-danger" href="/delet/{{id}}">Delet</a> 
+      </td>
+    </tr>
+  </tbody>
+  {{/each}}
+</table>
+</body>
+</html>

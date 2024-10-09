@@ -7,6 +7,7 @@ const app = express();
 // Import model mysql
 const mysql = require('mysql2');
 
+
 // Add bootstrap
 app.use('/bootstrap', express.static('./node_modules/bootstrap/dist'));
 
@@ -62,26 +63,48 @@ app.get('/list', function (req, res) {
 // Route register
 app.post('/register', function(req, res) {
 
-  // Geting data form
-  var name = req.body.name;
-  var age = req.body.age;
-  var email = req.body.email;
-  var password = req.body.password;
-  
-  // Sql query
-  let sql = `INSERT INTO client (name, idade, email, password) 
-  VALUES ('${name}', ${age}, '${email}', '${password}')`;
+  // Array error 
+  let error = [];
 
-  // Execute query
-  conection.query(sql, function(error, ret) {
-      if(error) throw error;
-      console.log(ret);
+  // Validations
+  if(!req.body.name || req.body.name == null || typeof req.body.name == undefined){
+    error.push({text: "Invalid name"})
+    console.log(error);
+  }
+  if(!req.body.age == null || typeof req.body.age == undefined){
+    error.push({text: "Invalid age"})
+  }
+  if(!req.body.email == null || typeof req.body.email == undefined){
+    error.push({text: "Invalid e-mail"})
+  } 
+  if(!req.body.password == null || typeof req.body.password == undefined){
+    error.push({text: "Invalid password"})
+  }
+  if(error.length > 0){
+    res.render('form', {error: error});    
+  }else{
+      // Geting data form
+    let name = req.body.name;
+    let age = req.body.age;
+    let email = req.body.email;
+    let password = req.body.password;
+
+    // Sql query
+      let sql = `INSERT INTO client (name, idade, email, password) 
+      VALUES ('${name}', ${age}, '${email}', '${password}')`;
+
+    // Execute query
+      conection.query(sql, function(error, ret) {
+          if(error) throw error;
+          console.log(ret);
+
+      // Redirect to from
+    res.redirect('/list');
+    res.end();
       
-  });
-  // Redirect to from
-  res.redirect('/list');
-  res.end();
-})
+  });   
+  }
+});
 
 // Route delete
 app.get('/delet/:id', function (req, res) {

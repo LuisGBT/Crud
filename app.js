@@ -94,7 +94,7 @@ app.get('/delet/:id', function (req, res) {
   })
   
    // Redirect to from
-  res.redirect('/form');
+  res.redirect('/list');
   res.end();
 })
 
@@ -117,17 +117,17 @@ app.post('/update', function(req, res) {
   var age = req.body.age;
   var email = req.body.email;
   var password = req.body.password;
+  
 
-  let sql = `UPTADE FROM client (name, idade, email, password) VALUES
-  ('${name}', ${age}, '${email}', '${password}') WHERE id = ${id}`;
+  let sql = `UPDATE client SET name ='${name}', idade = '${age}', email ='${email}', password ='${password}'  WHERE id = ${id}`;
+ 
 
   conection.query(sql, function(error, ret) {
     if(error) throw (error);
     console.log(ret);
   })
-  res.redirect('/list');
+  res.redirect('list');
   res.end();
-
 })
 
 //Server
